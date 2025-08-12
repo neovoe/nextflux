@@ -87,7 +87,7 @@ const FeedIcon = ({ feedId, url = null }) => {
       <span
         className={cn(
           "flex items-center shrink-0 justify-center w-5 h-5 p-0.5 bg-white transition-opacity duration-300 ease-in-out animate-in fade-in-0 shadow-small",
-          feedIconShape === "circle" ? "rounded-full" : "rounded",
+          feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
         )}
       >
         <Rss strokeWidth={3} className="size-3 text-black/60" />
@@ -104,7 +104,7 @@ const FeedIcon = ({ feedId, url = null }) => {
         wrapper: "shrink-0",
         img: cn(
           useGrayIcon ? "grayscale" : "",
-          feedIconShape === "circle" ? "rounded-full" : "rounded",
+          feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
         ),
       }}
       onError={handleError}

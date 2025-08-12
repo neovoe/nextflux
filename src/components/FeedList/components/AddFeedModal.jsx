@@ -237,7 +237,7 @@ export default function AddFeedModal() {
                   setSearchQuery("");
                   setResults([]);
                 }}
-                classNames={{ helperWrapper: "!hidden" }}
+                classNames={{ helperWrapper: "hidden!" }}
               >
                 {supportedTypes.map((type) => (
                   <SelectItem
@@ -265,12 +265,12 @@ export default function AddFeedModal() {
                   setSearchQuery(value);
                   setResults([]);
                 }}
-                classNames={{ inputWrapper: "!pr-1", helperWrapper: "!hidden" }}
+                classNames={{ inputWrapper: "pr-1!", helperWrapper: "hidden!" }}
               />
               <Button
                 size="sm"
                 color="primary"
-                className="border-primary border shadow-custom-button bg-primary bg-gradient-to-b from-white/15 to-transparent text-sm mt-1"
+                className="border-primary border shadow-custom-button bg-primary bg-linear-to-b from-white/15 to-transparent text-sm mt-1"
                 isDisabled={
                   searchQuery === "" || searchType === "" || searching
                 }
@@ -332,7 +332,7 @@ export default function AddFeedModal() {
                     category_id: parseInt(e.target.value),
                   })
                 }
-                classNames={{ helperWrapper: "!hidden" }}
+                classNames={{ helperWrapper: "hidden!" }}
               >
                 {$categories.map((category) => (
                   <SelectItem
@@ -465,7 +465,7 @@ export default function AddFeedModal() {
                   type="submit"
                   isLoading={loading}
                   size="sm"
-                  className="border-primary border shadow-custom-button bg-primary bg-gradient-to-b from-white/15 to-transparent text-sm"
+                  className="border-primary border shadow-custom-button bg-primary bg-linear-to-b from-white/15 to-transparent text-sm"
                 >
                   {t("common.save")}
                 </Button>

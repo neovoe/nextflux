@@ -134,7 +134,7 @@ export default function EditFeedModal() {
           </Select>
           <div>
             <div className="text-xs ml-0.5 mb-1">{t("feed.feedUrl")}</div>
-            <div className="flex items-center gap-2 bg-content2 rounded-lg pl-3 pr-1 py-1 border-default-200 hover:border-default-400 border-2 shadow-sm transition-colors">
+            <div className="flex items-center gap-2 bg-content2 rounded-lg pl-3 pr-1 py-1 border-default-200 hover:border-default-400 border-2 shadow-xs transition-colors">
               <div className="flex flex-col flex-1 overflow-hidden">
                 <div className="text-sm text-default-400 w-full truncate">
                   {feedUrl}
@@ -142,7 +142,7 @@ export default function EditFeedModal() {
               </div>
               <Button
                 size="sm"
-                className="!h-5"
+                className="h-5!"
                 isIconOnly
                 isDisabled={isCopied}
                 variant="flat"
@@ -292,7 +292,7 @@ export default function EditFeedModal() {
               type="submit"
               isLoading={loading}
               size="sm"
-              className="border-primary border shadow-custom-button bg-primary bg-gradient-to-b from-white/15 to-transparent text-sm"
+              className="border-primary border shadow-custom-button bg-primary bg-linear-to-b from-white/15 to-transparent text-sm"
             >
               {t("common.save")}
             </Button>

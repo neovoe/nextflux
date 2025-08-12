@@ -1,3 +1,5 @@
+@reference "../../index.css";
+
 
 .article-content, .article-title {
   @apply break-words;

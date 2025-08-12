@@ -44,7 +44,7 @@ export default function AlertDialog({
       hideCloseButton
       onClose={onClose}
       classNames={{
-        base: "alert-dialog standalone:mb-safe-or-2 relative !shadow-custom",
+        base: "alert-dialog standalone:mb-safe-or-2 relative shadow-custom!",
         body: "px-4 py-4 items-center sm:flex-row sm:items-start",
         footer: "px-4 py-4 flex flex-col-reverse sm:flex-row",
       }}
@@ -81,7 +81,7 @@ export default function AlertDialog({
             onPress={handleConfirm}
             isLoading={loading}
             size="sm"
-            className="border-danger border shadow-custom-button bg-danger bg-gradient-to-b from-white/15 to-transparent text-sm"
+            className="border-danger border shadow-custom-button bg-danger bg-linear-to-b from-white/15 to-transparent text-sm"
           >
             {confirmText}
           </Button>

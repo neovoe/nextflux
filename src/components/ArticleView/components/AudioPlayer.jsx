@@ -95,7 +95,7 @@ export default function AudioPlayer({ source }) {
                 <Card
                   className={cn(
                     "w-10 aspect-square bg-content2 rounded-lg shadow-custom",
-                    expand ? "w-full rounded-lg" : "rounded",
+                    expand ? "w-full rounded-lg" : "rounded-sm",
                   )}
                   isPressable
                   onPress={() => setExpand(!expand)}
@@ -154,7 +154,7 @@ export default function AudioPlayer({ source }) {
                       showArrow
                       closeDelay={0}
                       content={t("articleView.stopPlay")}
-                      classNames={{ content: "!shadow-custom" }}
+                      classNames={{ content: "shadow-custom!" }}
                     >
                       <Button
                         isIconOnly

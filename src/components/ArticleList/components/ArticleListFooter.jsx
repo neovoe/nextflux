@@ -47,7 +47,7 @@ export default function ArticleListFooter() {
           key="unread"
           title={
             <div className="flex items-center space-x-1.5">
-              <CircleDot className="size-3 p-[1px] fill-current" />
+              <CircleDot className="size-3 p-px fill-current" />
               <span>{t("articleList.unread")}</span>
             </div>
           }

@@ -23,7 +23,7 @@ export const ItemWrapper = ({ title, children }) => {
       <div className="text-xs text-default-500 font-medium ml-2.5 mb-1">
         {title}
       </div>
-      <div className="rounded-xl overflow-hidden border shadow-sm">
+      <div className="rounded-xl overflow-hidden border shadow-xs">
         {children}
       </div>
     </div>
@@ -55,7 +55,7 @@ export const SliderItem = ({
           classNames={{
             trackWrapper: "rounded-full shadow-custom-inner bg-default/40",
             track:
-              "h-6 my-0 !border-s-primary/20 !border-e-transparent bg-transparent",
+              "h-6 my-0 border-s-primary/20! border-e-transparent! bg-transparent",
             filler:
               "bg-primary/20 after:absolute after:-right-3 after:h-6 after:w-3 after:bg-primary/20 after:rounded-r-full",
             step: "data-[in-range=true]:bg-primary data-[in-range=true]:shadow-md shadow-primary",
@@ -120,7 +120,7 @@ export function SelItem({ label, icon, settingName, settingValue, options }) {
       <Dropdown>
         <DropdownTrigger>
           <Button
-            className="capitalize gap-1 pr-1.5 h-7 rounded-md bg-content1 dark:bg-default !shadow-custom-cursor"
+            className="capitalize gap-1 pr-1.5 h-7 rounded-md bg-content1 dark:bg-default shadow-custom-cursor!"
             variant="solid"
             size="sm"
             endContent={
@@ -167,9 +167,9 @@ export function GroupItem({ label, icon, settingName, settingValue, options }) {
         variant="solid"
         classNames={{
           tabList:
-            "bg-default-100/90 backdrop-blur-md shadow-custom-inner p-[1px] gap-0 rounded-small overflow-visible",
+            "bg-default-100/90 backdrop-blur-md shadow-custom-inner p-px gap-0 rounded-small overflow-visible",
           tab: "py-1 h-7",
-          cursor: "bg-content1 !shadow-custom-cursor rounded-small",
+          cursor: "bg-content1 shadow-custom-cursor! rounded-small",
         }}
         selectedKey={settingValue}
         onSelectionChange={(value) => {
@@ -202,7 +202,7 @@ export function KeyboardItem({ desc, kbdKey, keyStr }) {
       </div>
       <Kbd
         classNames={{
-          base: "min-w-8 !shadow-custom",
+          base: "min-w-8 shadow-custom!",
           abbr: "text-xs text-default-400",
           content: "w-full text-xs text-default-400",
         }}

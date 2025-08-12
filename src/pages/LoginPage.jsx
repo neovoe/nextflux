@@ -97,7 +97,7 @@ export default function LoginPage() {
             variant="faded"
             value={serverUrl}
             onChange={(e) => setServerUrl(e.target.value)}
-            classNames={{ helperWrapper: "!hidden" }}
+            classNames={{ helperWrapper: "hidden!" }}
           />
 
           {authType === "basic" ? (
@@ -112,7 +112,7 @@ export default function LoginPage() {
                 variant="faded"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                classNames={{ helperWrapper: "!hidden" }}
+                classNames={{ helperWrapper: "hidden!" }}
               />
               <Input
                 isRequired
@@ -123,9 +123,9 @@ export default function LoginPage() {
                     onClick={() => setIsVisible(!isVisible)}
                   >
                     {isVisible ? (
-                      <EyeClosed className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
+                      <EyeClosed className="text-xl text-default-400 pointer-events-none shrink-0" />
                     ) : (
-                      <Eye className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
+                      <Eye className="text-xl text-default-400 pointer-events-none shrink-0" />
                     )}
                   </button>
                 }
@@ -136,7 +136,7 @@ export default function LoginPage() {
                 variant="faded"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                classNames={{ helperWrapper: "!hidden" }}
+                classNames={{ helperWrapper: "hidden!" }}
               />
             </>
           ) : (
@@ -150,7 +150,7 @@ export default function LoginPage() {
               variant="faded"
               value={token}
               onChange={(e) => setToken(e.target.value)}
-              classNames={{ helperWrapper: "!hidden" }}
+              classNames={{ helperWrapper: "hidden!" }}
             />
           )}
 
@@ -163,7 +163,7 @@ export default function LoginPage() {
             </Link>
           </div>
           <Button
-            className="w-full bg-primary bg-gradient-to-b from-white/15 to-transparent border-primary border shadow-custom-button"
+            className="w-full bg-primary bg-linear-to-b from-white/15 to-transparent border-primary border shadow-custom-button"
             color="primary"
             type="submit"
             isLoading={loading}

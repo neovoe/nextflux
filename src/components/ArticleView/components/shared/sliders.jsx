@@ -7,20 +7,20 @@ import {
 export function Time() {
   return (
     <div className="audio-player-slider w-full">
-      <TimeSlider.Root className="group relative inline-flex w-full cursor-pointer touch-none select-none items-center outline-none aria-hidden:hidden">
-        <TimeSlider.Track className="relative ring-primary z-0 h-2 w-full rounded-full bg-content3 group-data-[focus]:ring-[3px]">
-          <TimeSlider.TrackFill className="bg-primary z-20 absolute h-full w-[var(--slider-fill)] rounded-full will-change-[width]" />
-          <TimeSlider.Progress className="absolute z-10 h-full w-[var(--slider-progress)] rounded-full bg-transparent will-change-[width]" />
+      <TimeSlider.Root className="group relative inline-flex w-full cursor-pointer touch-none select-none items-center outline-hidden aria-hidden:hidden">
+        <TimeSlider.Track className="relative ring-primary z-0 h-2 w-full rounded-full bg-content3 group-data-focus:ring-[3px]">
+          <TimeSlider.TrackFill className="bg-primary z-20 absolute h-full w-(--slider-fill) rounded-full will-change-[width]" />
+          <TimeSlider.Progress className="absolute z-10 h-full w-(--slider-progress) rounded-full bg-transparent will-change-[width]" />
         </TimeSlider.Track>
 
         <TimeSlider.Preview
-          className="flex flex-col items-center opacity-0 transition-opacity duration-200 data-[visible]:opacity-100 pointer-events-none"
+          className="flex flex-col items-center opacity-0 transition-opacity duration-200 data-visible:opacity-100 pointer-events-none"
           noClamp
         >
           <TimeSlider.Value className="rounded bg-content1 px-2 py-1 mb-2 text-xs font-medium text-default-500 shadow-custom" />
         </TimeSlider.Preview>
 
-        <TimeSlider.Thumb className="absolute left-[var(--slider-fill)] top-1/2 z-20 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-custom bg-white ring-primary/40 transition-size group-data-[active]:size-5 group-data-[dragging]:ring-4 will-change-[left]" />
+        <TimeSlider.Thumb className="absolute left-(--slider-fill) top-1/2 z-20 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-custom bg-white ring-primary/40 transition-size group-data-active:size-5 group-data-dragging:ring-4 will-change-[left]" />
       </TimeSlider.Root>
 
       <div className="flex justify-between">

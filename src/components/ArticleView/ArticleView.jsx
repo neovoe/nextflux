@@ -117,7 +117,7 @@ const ArticleView = () => {
             >
               <a
                 href={domNode.attribs.href}
-                className="!border-none"
+                className="border-none!"
                 rel="noopener noreferrer"
                 target="_blank"
               >

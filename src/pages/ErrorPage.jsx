@@ -26,7 +26,7 @@ export default function ErrorPage() {
           size="sm"
           startContent={<House className="size-4" />}
           className={
-            "shadow-custom-button text-sm bg-primary bg-gradient-to-b from-white/15 to-transparent border-primary border"
+            "shadow-custom-button text-sm bg-primary bg-linear-to-b from-white/15 to-transparent border-primary border"
           }
         >
           {t("error.backToHome")}

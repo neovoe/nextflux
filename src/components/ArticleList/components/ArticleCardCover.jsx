@@ -38,7 +38,7 @@ function ArticleCardCover({ imageUrl }) {
       ref={imgRef}
       className={cn(
         "card-image bg-content3 rounded-lg shadow-custom overflow-hidden",
-        loading && "!animate-pulse",
+        loading && "animate-pulse!",
         cardImageSize === "large"
           ? "aspect-video w-full"
           : "w-20 h-20 shrink-0",

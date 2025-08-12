@@ -142,7 +142,7 @@ export default function SearchModal() {
             endContent={
               <Kbd
                 classNames={{
-                  base: "!shadow-custom",
+                  base: "shadow-custom!",
                   content: "font-mono text-xs text-default-400",
                 }}
               >
@@ -189,14 +189,14 @@ export default function SearchModal() {
             <Kbd
               keys="up"
               classNames={{
-                base: "!shadow-custom",
+                base: "shadow-custom!",
                 abbr: "text-xs text-default-500",
               }}
             />
             <Kbd
               keys="down"
               classNames={{
-                base: "!shadow-custom",
+                base: "shadow-custom!",
                 abbr: "text-xs text-default-500",
               }}
             />
@@ -207,7 +207,7 @@ export default function SearchModal() {
             <Kbd
               keys="enter"
               classNames={{
-                base: "!shadow-custom",
+                base: "shadow-custom!",
                 abbr: "text-xs text-default-500",
               }}
             />

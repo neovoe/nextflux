@@ -66,7 +66,7 @@ export default function CustomModal({ open, onOpenChange, title, children }) {
       hideCloseButton
       classNames={{
         header: "px-4 pt-3 pb-4 flex justify-between text-base font-medium",
-        base: "p-0 !shadow-custom",
+        base: "p-0 shadow-custom!",
       }}
     >
       <ModalContent>

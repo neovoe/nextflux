@@ -80,7 +80,7 @@ const ArticleList = () => {
 
   return (
     <div className="main-content flex">
-      <div className="w-full relative max-w-[100vw] md:w-[21rem] md:max-w-[30%] md:min-w-[18rem] h-[100dvh] flex flex-col">
+      <div className="w-full relative max-w-screen md:w-84 md:max-w-[30%] md:min-w-[18rem] h-dvh flex flex-col">
         <ArticleListHeader />
         {showIndicator && <Indicator virtuosoRef={virtuosoRef} />}
         <ArticleListContent

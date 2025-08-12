@@ -6,7 +6,7 @@ export const FancyLogo = ({ since }) => {
   const boundingRef = useRef(null);
 
   return (
-    <div className="flex flex-col [perspective:800px] p-5 bg-content2 dark:bg-transparent dark:border-b">
+    <div className="flex flex-col perspective-midrange p-5 bg-content2 dark:bg-transparent dark:border-b">
       <div
         onMouseLeave={() => {
           boundingRef.current = null;
@@ -32,7 +32,7 @@ export const FancyLogo = ({ since }) => {
           ev.currentTarget.style.setProperty("--bg-x", `${XBackground}%`);
           ev.currentTarget.style.setProperty("--bg-y", `${YBackground}%`);
         }}
-        className="group relative w-full flex flex-col gap-6 py-6 items-center overflow-hidden rounded-lg bg-gradient-to-b from-green-100 to-green-200 dark:from-green-900 dark:to-green-950 p-2 text-[#01A977] transition-transform ease-out hover:[transform:rotateX(var(--r-x,0deg))_rotateY(var(--r-y,0deg))_scale(1.05)] shadow-custom [--x:50%] [--y:50%] [--bg-x:50%] [--bg-y:50%]"
+        className="group relative w-full flex flex-col gap-6 py-6 items-center overflow-hidden rounded-lg bg-linear-to-b from-green-100 to-green-200 dark:from-green-900 dark:to-green-950 p-2 text-[#01A977] transition-transform ease-out hover:[transform:rotateX(var(--r-x,0deg))_rotateY(var(--r-y,0deg))_scale(1.05)] shadow-custom [--x:50%] [--y:50%] [--bg-x:50%] [--bg-y:50%]"
       >
         <Image
           src={logo}
@@ -40,7 +40,7 @@ export const FancyLogo = ({ since }) => {
           classNames={{ wrapper: "size-24", image: "aspect-square" }}
         />
         <footer className="flex items-end">
-          <span className="flex rounded-sm border border-current px-1 py-px text-xs uppercase">
+          <span className="flex rounded-xs border border-current px-1 py-px text-xs uppercase">
             NEXTFLUX{" "}
             <span className="-my-px mx-1 inline-block w-4 border-l border-r border-current bg-[repeating-linear-gradient(-45deg,currentColor,currentColor_1px,transparent_1px,transparent_2px)]" />{" "}
             {since}

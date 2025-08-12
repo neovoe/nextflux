@@ -29,11 +29,11 @@ export default function AboutModal() {
           aboutModalOpen.set(value);
         }}
         classNames={{
-          base: "mb-safe-offset-2 mt-2 mx-2 max-h-[80vh] h-[612px] overflow-hidden !shadow-custom",
+          base: "mb-safe-offset-2 mt-2 mx-2 max-h-[80vh] h-[612px] overflow-hidden shadow-custom!",
           header:
             "border-b flex flex-col gap-3 p-3 bg-content1 dark:bg-transparent",
           footer: "hidden",
-          body: "modal-body p-0 !block",
+          body: "modal-body p-0 block!",
           closeButton: "hidden",
         }}
       >

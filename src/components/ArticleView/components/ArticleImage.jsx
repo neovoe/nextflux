@@ -52,7 +52,7 @@ function ArticleImage({ imgNode, type = "article" }) {
       <div
         className={cn(
           "h-full min-h-[200px] bg-content2 flex items-center justify-center",
-          type === "article" ? "!max-w-[calc(100%+2.5rem)] -mx-5" : "",
+          type === "article" ? "max-w-[calc(100%+2.5rem)]! -mx-5" : "",
         )}
       >
         <div className="flex flex-col items-center gap-2 text-default-500">
@@ -71,9 +71,9 @@ function ArticleImage({ imgNode, type = "article" }) {
         classNames={{
           wrapper: cn(
             " flex justify-center my-1",
-            type === "article" ? "!max-w-[calc(100%+2.5rem)] -mx-5" : "",
+            type === "article" ? "max-w-[calc(100%+2.5rem)]! -mx-5" : "",
             type === "enclosure"
-              ? "rounded-lg !shadow-custom mx-auto overflow-hidden"
+              ? "rounded-lg shadow-custom! mx-auto overflow-hidden"
               : "",
           ),
           img: "h-auto object-cover m-0",
