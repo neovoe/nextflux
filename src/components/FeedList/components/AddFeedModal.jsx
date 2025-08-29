@@ -10,8 +10,8 @@ import {
   SelectItem,
   Textarea,
   Divider,
-  addToast,
 } from "@heroui/react";
+import { toast } from "sonner";
 import { useState } from "react";
 import { useStore } from "@nanostores/react";
 import { categories } from "@/stores/feedsStore";
@@ -145,10 +145,7 @@ export default function AddFeedModal() {
       }
     } catch (e) {
       if (e.response?.status === 404) {
-        addToast({
-          title: t("search.searchResultsPlaceholder"),
-          color: "danger",
-        });
+        toast.error(t("search.searchResultsPlaceholder"));
       }
       setResults([]);
     } finally {

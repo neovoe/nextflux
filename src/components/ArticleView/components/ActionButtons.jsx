@@ -27,7 +27,7 @@ import { settingsState } from "@/stores/settingsStore.js";
 import { useRef, useState } from "react";
 import minifluxAPI from "@/api/miniflux";
 import { useTranslation } from "react-i18next";
-import { addToast } from "@heroui/react";
+import { toast } from "sonner";
 import { hasIntegrations } from "@/stores/basicInfoStore.js";
 
 export default function ActionButtons({ parentRef }) {
@@ -99,7 +99,7 @@ export default function ActionButtons({ parentRef }) {
     setSaveLoading(true);
     try {
       await minifluxAPI.saveToThirdParty($activeArticle.id);
-      addToast({ title: t("common.success"), color: "success" });
+      toast.success(t("common.success"));
     } catch (error) {
       console.error("保存到第三方服务失败:", error);
     } finally {
