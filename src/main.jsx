@@ -17,7 +17,11 @@ createRoot(document.getElementById("root")).render(
     <Toaster
       theme="system"
       icons={{
-        loading: <Spinner size="sm" />,
+        loading: (
+          <div className="flex">
+            <Spinner variant="simple" classNames={{ wrapper: "size-4" }} />
+          </div>
+        ),
       }}
       toastOptions={{
         classNames: {
