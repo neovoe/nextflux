@@ -226,7 +226,6 @@ export default function AddFeedModal() {
                 size="sm"
                 variant="faded"
                 placeholder={t("feed.feedTypePlaceholder")}
-                errorMessage={t("feed.feedTypeRequired")}
                 disallowEmptySelection
                 selectedKeys={[searchType]}
                 onChange={(e) => {
@@ -234,7 +233,6 @@ export default function AddFeedModal() {
                   setSearchQuery("");
                   setResults([]);
                 }}
-                classNames={{ helperWrapper: "hidden!" }}
               >
                 {supportedTypes.map((type) => (
                   <SelectItem
@@ -321,7 +319,6 @@ export default function AddFeedModal() {
                 variant="faded"
                 name="category_id"
                 placeholder={t("feed.feedCategoryPlaceholder")}
-                errorMessage={t("feed.feedCategoryRequired")}
                 selectedKeys={[formData.category_id?.toString()]}
                 onChange={(e) =>
                   setFormData({
@@ -329,7 +326,6 @@ export default function AddFeedModal() {
                     category_id: parseInt(e.target.value),
                   })
                 }
-                classNames={{ helperWrapper: "hidden!" }}
               >
                 {$categories.map((category) => (
                   <SelectItem
