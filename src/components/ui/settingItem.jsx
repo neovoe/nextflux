@@ -2,6 +2,7 @@ import { updateSettings } from "@/stores/settingsStore.js";
 import {
   Button,
   Chip,
+  cn,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -100,8 +101,16 @@ export const SwitchItem = ({
       <Switch
         isSelected={settingValue}
         classNames={{
-          wrapper: "shadow-custom-inner h-6 w-11 px-0.5 overflow-visible",
-          thumb: "absolute w-5 h-5 shadow-md",
+          wrapper: "shadow-custom-inner h-6 w-12 px-0.5 overflow-visible",
+          thumb: cn(
+            "w-7 h-5 shadow-md",
+            "group-data-[hover=true]:border-primary",
+            //selected
+            "group-data-[selected=true]:ms-4",
+            // pressed
+            "group-data-[pressed=true]:w-7.5",
+            "group-data-pressed:group-data-selected:ms-3.5!",
+          ),
         }}
         isDisabled={disabled}
         onValueChange={(value) => updateSettings({ [settingName]: value })}
