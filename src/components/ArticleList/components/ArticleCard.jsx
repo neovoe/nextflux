@@ -36,7 +36,7 @@ export default function ArticleCard({ article }) {
 
   const imageUrl = useMemo(() => extractFirstImage(article), [article]);
   const feedTitle = useMemo(() => {
-    const feed = $feeds.find(f => f.id === article.feedId);
+    const feed = $feeds.find((f) => f.id === article.feedId);
     return feed?.title || article.feedId;
   }, [article.feedId, $feeds]);
 
@@ -119,7 +119,7 @@ export default function ArticleCard({ article }) {
     <div
       ref={cardRef}
       className={cn(
-        "cursor-pointer select-none overflow-hidden p-2 rounded-lg",
+        "cursor-pointer select-none overflow-hidden p-2 rounded-xl",
         "relative transform-gpu transition-background duration-200",
         "bg-transparent contain-content",
         "hover:bg-background/70",

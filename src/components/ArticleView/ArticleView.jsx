@@ -169,7 +169,7 @@ const ArticleView = () => {
             <ScrollShadow
               ref={scrollAreaRef}
               isEnabled={false}
-              className="article-scroll-area h-full bg-background rounded-none md:rounded-lg shadow-none md:shadow-custom"
+              className="article-scroll-area h-full bg-background rounded-none md:rounded-2xl shadow-none md:shadow-custom"
             >
               <ActionButtons parentRef={scrollAreaRef} />
 
