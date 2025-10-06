@@ -109,7 +109,7 @@ export default function ActionButtons({ parentRef }) {
 
   return (
     <Navbar
-      className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-gradient-to-b from-background/70 to-background/0"
+      className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-gradient-to-b from-content2/70 to-background/0"
       maxWidth="full"
       isBlurred={false}
       shouldHideOnScroll={autoHideToolbar}

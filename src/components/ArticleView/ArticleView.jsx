@@ -142,7 +142,7 @@ const ArticleView = () => {
         <motion.div
           key={articleId ? "content" : "empty"}
           className={cn(
-            "flex-1 p-0 md:pr-2 md:py-2 h-screen fixed md:static inset-0 z-20",
+            "flex-1 p-0 h-screen fixed md:static inset-0 z-20",
             !articleId ? "hidden md:flex md:flex-1" : "",
           )}
           initial={
@@ -169,7 +169,7 @@ const ArticleView = () => {
             <ScrollShadow
               ref={scrollAreaRef}
               isEnabled={false}
-              className="article-scroll-area h-full bg-background rounded-none md:rounded-2xl shadow-none md:shadow-custom"
+              className="article-scroll-area h-full bg-content2 md:bg-transparent"
             >
               <ActionButtons parentRef={scrollAreaRef} />
 

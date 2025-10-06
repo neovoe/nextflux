@@ -56,7 +56,7 @@ const FeedListSidebar = () => {
   }, [$lastSync, showHiddenFeeds]);
 
   return (
-    <Sidebar variant="sidebar" className="sidebar">
+    <Sidebar variant="floating" className="sidebar">
       <SidebarHeader className="sidebar-header standalone:pt-safe-or-2">
         <SidebarMenu>
           <SidebarMenuItem>
