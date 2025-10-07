@@ -146,14 +146,12 @@ const ArticleView = () => {
             !articleId ? "hidden md:flex md:flex-1" : "",
           )}
           initial={
-            articleId
-              ? { opacity: 1, x: "100%" }
-              : { opacity: 0, x: 0, scale: 0.8 }
+            articleId ? { opacity: 1, x: 40 } : { opacity: 0, x: 0, scale: 0.8 }
           }
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={
             articleId
-              ? { opacity: 0, x: "100%", scale: 1 }
+              ? { opacity: 0, x: 40, scale: 1 }
               : { opacity: 0, x: 0, scale: 0.8 }
           }
           transition={{

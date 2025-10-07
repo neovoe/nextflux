@@ -257,6 +257,8 @@ export default {
       circle: "Daire",
       square: "Kare",
       grayscale: "Gri tonlamalı faviconlar",
+      sidebar: "KENAR ÇUBUĞU",
+      floatingSidebar: "Yüzen kenar çubuğu",
       articleList: "MAKALE LİSTESİ",
       imagePreviews: "Görüntü önizlemeleri",
       none: "Yok",

@@ -257,6 +257,8 @@ export default {
       circle: "Circle",
       square: "Square",
       grayscale: "Grayscale favicons",
+      sidebar: "SIDEBAR",
+      floatingSidebar: "Floating sidebar",
       articleList: "ARTICLE LIST",
       imagePreviews: "Image previews",
       none: "None",

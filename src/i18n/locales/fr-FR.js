@@ -256,6 +256,8 @@ export default {
       circle: "Cercle",
       square: "Carré",
       grayscale: "Favicons en niveaux de gris",
+      sidebar: "BARRE LATÉRALE",
+      floatingSidebar: "Barre latérale flottante",
       articleList: "LISTE D'ARTICLES",
       imagePreviews: "Aperçus d'image",
       none: "Aucun",

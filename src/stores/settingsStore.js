@@ -28,6 +28,7 @@ const defaultValue = {
   reduceMotion: false,
   interfaceFontSize: "16",
   showIndicator: true,
+  floatingSidebar: false,
 };
 
 export const settingsState = persistentAtom("settings", defaultValue, {

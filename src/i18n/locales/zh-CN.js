@@ -256,6 +256,8 @@ export default {
       circle: "圆形",
       square: "方形",
       grayscale: "灰度图标",
+      sidebar: "侧边栏",
+      floatingSidebar: "浮动侧边栏",
       articleList: "文章列表",
       imagePreviews: "图片预览",
       none: "隐藏",
