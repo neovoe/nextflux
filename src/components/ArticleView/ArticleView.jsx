@@ -98,15 +98,17 @@ const ArticleView = () => {
   }, [articleId, $filteredArticles]);
 
   const handleLinkWithImg = (domNode) => {
-    const imgNode = domNode.children.find(
+    const imgNodes = domNode.children.filter(
       (child) => child.type === "tag" && child.name === "img",
     );
 
-    if (imgNode) {
+    if (imgNodes.length > 0) {
       const hostname = getHostname(domNode.attribs.href);
       return (
         <>
-          <ArticleImage imgNode={imgNode} />
+          {imgNodes.map((imgNode, index) => (
+            <ArticleImage imgNode={imgNode} key={imgNode.attribs?.src || index} />
+          ))}
           <div className="flex justify-center">
             <Chip
               color="primary"
