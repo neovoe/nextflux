@@ -95,7 +95,7 @@ export default function AudioPlayer({ source }) {
                 <Card
                   className={cn(
                     "w-8 aspect-square bg-content2 rounded-lg shadow-custom",
-                    expand ? "w-full rounded-lg" : "rounded-xl",
+                    expand ? "w-full rounded-lg" : "rounded-md",
                   )}
                   isPressable
                   onPress={() => setExpand(!expand)}
