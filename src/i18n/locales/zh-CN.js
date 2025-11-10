@@ -37,6 +37,12 @@ export default {
     minute: "分钟",
     lessThanAMinute: "不到 1 分钟",
     add: "添加",
+    refresh: "刷新",
+    markAllRead: "全部标为已读",
+    markAboveAsRead: "标记上方为已读",
+    markBelowAsRead: "标记下方为已读",
+    markAsRead: "标为已读",
+    markAsUnread: "标为未读",
   },
   feed: {
     feedUrl: "订阅地址",

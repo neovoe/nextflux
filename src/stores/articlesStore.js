@@ -264,3 +264,153 @@ export async function markAllAsRead(type = "all", id = null) {
     throw err;
   }
 }
+
+// Mark articles above a specific article as read (including the current article)
+export async function markAboveAsRead(articleId) {
+  const articles = filteredArticles.get();
+  const articleIndex = articles.findIndex((a) => a.id === articleId);
+  
+  if (articleIndex < 0) {
+    return; // Article not found
+  }
+  
+  // Get all articles above and including the current one that are unread
+  const articlesToMark = articles
+    .slice(0, articleIndex + 1)
+    .filter((article) => article.status !== "read");
+  
+  if (articlesToMark.length === 0) {
+    return;
+  }
+  
+  // Group by feed for count updates
+  const articlesByFeed = articlesToMark.reduce((acc, article) => {
+    acc[article.feedId] = acc[article.feedId] || [];
+    acc[article.feedId].push(article);
+    return acc;
+  }, {});
+  
+  // Optimistically update UI
+  filteredArticles.set(
+    articles.map((article) => 
+      articlesToMark.some((a) => a.id === article.id)
+        ? { ...article, status: "read" }
+        : article
+    ),
+  );
+  
+  try {
+    await Promise.all([
+      // Update server
+      navigator.onLine && Promise.all(
+        articlesToMark.map((article) => minifluxAPI.updateEntryStatus(article))
+      ),
+      
+      // Update local database
+      addArticles(
+        articlesToMark.map((article) => ({
+          ...article,
+          status: "read",
+        })),
+      ),
+      
+      // Update unread counts
+      (async () => {
+        const counts = {};
+        const feedIds = Object.keys(articlesByFeed);
+        
+        const unreadCountsArray = await Promise.all(
+          feedIds.map((feedId) => getUnreadCount(feedId)),
+        );
+        
+        feedIds.forEach((feedId, index) => {
+          counts[feedId] = unreadCountsArray[index];
+        });
+        
+        unreadCounts.set({
+          ...unreadCounts.get(),
+          ...counts,
+        });
+      })(),
+    ].filter(Boolean));
+  } catch (err) {
+    filteredArticles.set(articles);
+    console.error("标记上方为已读失败:", err);
+    throw err;
+  }
+}
+
+// Mark articles below a specific article as read
+export async function markBelowAsRead(articleId) {
+  const articles = filteredArticles.get();
+  const articleIndex = articles.findIndex((a) => a.id === articleId);
+  
+  if (articleIndex === -1 || articleIndex >= articles.length - 1) {
+    return; // No articles below
+  }
+  
+  // Get all articles below the current one that are unread
+  const articlesToMark = articles
+    .slice(articleIndex)
+    .filter((article) => article.status !== "read");
+  
+  if (articlesToMark.length === 0) {
+    return;
+  }
+  
+  // Group by feed for count updates
+  const articlesByFeed = articlesToMark.reduce((acc, article) => {
+    acc[article.feedId] = acc[article.feedId] || [];
+    acc[article.feedId].push(article);
+    return acc;
+  }, {});
+  
+  // Optimistically update UI
+  filteredArticles.set(
+    articles.map((article) => 
+      articlesToMark.some((a) => a.id === article.id)
+        ? { ...article, status: "read" }
+        : article
+    ),
+  );
+  
+  try {
+    await Promise.all([
+      // Update server
+      navigator.onLine && Promise.all(
+        articlesToMark.map((article) => minifluxAPI.updateEntryStatus(article))
+      ),
+      
+      // Update local database
+      addArticles(
+        articlesToMark.map((article) => ({
+          ...article,
+          status: "read",
+        })),
+      ),
+      
+      // Update unread counts
+      (async () => {
+        const counts = {};
+        const feedIds = Object.keys(articlesByFeed);
+        
+        const unreadCountsArray = await Promise.all(
+          feedIds.map((feedId) => getUnreadCount(feedId)),
+        );
+        
+        feedIds.forEach((feedId, index) => {
+          counts[feedId] = unreadCountsArray[index];
+        });
+        
+        unreadCounts.set({
+          ...unreadCounts.get(),
+          ...counts,
+        });
+      })(),
+    ].filter(Boolean));
+  } catch (err) {
+    filteredArticles.set(articles);
+    console.error("标记下方为已读失败:", err);
+    throw err;
+  }
+}

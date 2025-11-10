@@ -37,6 +37,12 @@ export default {
     minute: "min",
     lessThanAMinute: "less than 1 min",
     add: "Add",
+    refresh: "Refresh",
+    markAllRead: "Mark All as Read",
+    markAboveAsRead: "Mark Above as Read",
+    markBelowAsRead: "Mark Below as Read",
+    markAsRead: "Mark as Read",
+    markAsUnread: "Mark as Unread",
   },
   feed: {
     feedUrl: "Feed URL",
