@@ -37,12 +37,6 @@ export default {
     minute: "dk",
     lessThanAMinute: "1 dakikadan az",
     add: "Ekle",
-    refresh: "Yenile",
-    markAllRead: "Tümünü Okundu Olarak İşaretle",
-    markAboveAsRead: "Yukarıyı Okundu Olarak İşaretle",
-    markBelowAsRead: "Aşağıyı Okundu Olarak İşaretle",
-    markAsRead: "Okundu Olarak İşaretle",
-    markAsUnread: "Okunmadı Olarak İşaretle",
   },
   feed: {
     feedUrl: "Besleme URL'si",
