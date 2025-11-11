@@ -37,12 +37,6 @@ export default {
     minute: "min",
     lessThanAMinute: "moins d'une minute",
     add: "Ajouter",
-    refresh: "Actualiser",
-    markAllRead: "Tout marquer comme lu",
-    markAboveAsRead: "Marquer au-dessus comme lu",
-    markBelowAsRead: "Marquer ci-dessous comme lu",
-    markAsRead: "Marquer comme lu",
-    markAsUnread: "Marquer comme non lu",
   },
   feed: {
     feedUrl: "URL du flux",
