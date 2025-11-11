@@ -97,7 +97,9 @@ const ContextMenuItem = ({ onClick, children, className }) => {
       onTouchEnd={handleClick}
       className={cn(
         "px-3 py-2 cursor-pointer text-sm",
-        "hover:bg-default/40 transition-colors",
+        "hover:bg-default/40 active:bg-default/60",
+        "transition-colors duration-150",
+        "select-none",
         "text-foreground",
         className
       )}
