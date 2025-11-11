@@ -85,13 +85,16 @@ const ContextMenu = ({ isOpen, onClose, position, children }) => {
 };
 
 const ContextMenuItem = ({ onClick, children, className }) => {
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     onClick?.();
   };
 
   return (
     <div
       onClick={handleClick}
+      onTouchEnd={handleClick}
       className={cn(
         "px-3 py-2 cursor-pointer text-sm",
         "hover:bg-default/40 transition-colors",

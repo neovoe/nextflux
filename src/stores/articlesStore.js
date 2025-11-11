@@ -194,72 +194,87 @@ export async function updateArticleStarred(article) {
 
 // 改进后的 markAllAsRead 函数
 export async function markAllAsRead(type = "all", id = null) {
-  // 获取受影响的文章
-  const articles = filteredArticles.get();
-  const affectedArticles = articles.filter(
-    (article) => article.status !== "read",
-  );
-
-  // 如果没有需要标记的文章，直接返回
-  if (affectedArticles.length === 0) {
-    return;
-  }
-
-  // 按 feedId 分组需要更新的文章
-  const articlesByFeed = affectedArticles.reduce((acc, article) => {
-    acc[article.feedId] = acc[article.feedId] || [];
-    acc[article.feedId].push(article);
-    return acc;
-  }, {});
-
-  // 乐观更新UI
-  filteredArticles.set(
-    articles.map((article) => ({
-      ...article,
-      status: "read",
-    })),
-  );
-
   try {
-    // 并行执行更新
-    await Promise.all(
-      [
-        // 更新服务器
-        navigator.onLine && minifluxAPI.markAllAsRead(type, id),
+    // 先调用服务器 API 标记已读
+    if (navigator.onLine) {
+      await minifluxAPI.markAllAsRead(type, id);
+    }
 
-        // 更新本地数据库
-        addArticles(
-          affectedArticles.map((article) => ({
-            ...article,
-            status: "read",
-          })),
-        ),
+    // 获取当前页面的文章
+    const articles = filteredArticles.get();
+    
+    // 判断当前页面是否需要更新（是否显示了被标记的内容）
+    let shouldUpdateCurrentView = false;
+    let affectedArticles = [];
 
-        // 批量更新未读计数
-        (async () => {
-          const counts = {};
-          const feedIds = Object.keys(articlesByFeed);
+    if (type === "feed" && id) {
+      // 标记特定 feed：只有当前页面显示该 feed 时才更新列表
+      affectedArticles = articles.filter(
+        (article) => article.feedId === parseInt(id) && article.status !== "read"
+      );
+      shouldUpdateCurrentView = affectedArticles.length > 0;
+    } else if (type === "category" && id) {
+      // 标记特定分类：检查当前文章是否属于该分类
+      const feeds = await getFeeds();
+      const categoryFeedIds = feeds
+        .filter((feed) => feed.categoryId === parseInt(id))
+        .map((feed) => feed.id);
+      
+      affectedArticles = articles.filter(
+        (article) => categoryFeedIds.includes(article.feedId) && article.status !== "read"
+      );
+      shouldUpdateCurrentView = affectedArticles.length > 0;
+    } else {
+      // 标记全部：更新当前所有未读文章
+      affectedArticles = articles.filter((article) => article.status !== "read");
+      shouldUpdateCurrentView = affectedArticles.length > 0;
+    }
 
-          // 并行获取所有订阅源的未读计数
-          const unreadCountsArray = await Promise.all(
-            feedIds.map((feedId) => getUnreadCount(feedId)),
-          );
+    // 更新当前页面的文章列表（如果需要）
+    if (shouldUpdateCurrentView) {
+      filteredArticles.set(
+        articles.map((article) =>
+          affectedArticles.some((a) => a.id === article.id)
+            ? { ...article, status: "read" }
+            : article
+        )
+      );
 
-          // 组装未读计数对象
-          feedIds.forEach((feedId, index) => {
-            counts[feedId] = unreadCountsArray[index];
-          });
+      // 更新本地数据库
+      await addArticles(
+        affectedArticles.map((article) => ({
+          ...article,
+          status: "read",
+        }))
+      );
+    }
 
-          unreadCounts.set({
-            ...unreadCounts.get(),
-            ...counts,
-          });
-        })(),
-      ].filter(Boolean),
-    );
+    // 更新未读计数
+    const currentCounts = unreadCounts.get();
+    const updatedCounts = { ...currentCounts };
+
+    if (type === "feed" && id) {
+      // 特定 feed：计数归 0
+      updatedCounts[id] = 0;
+    } else if (type === "category" && id) {
+      // 特定分类：该分类下所有 feed 计数归 0
+      const feeds = await getFeeds();
+      const categoryFeedIds = feeds
+        .filter((feed) => feed.categoryId === parseInt(id))
+        .map((feed) => feed.id);
+      
+      categoryFeedIds.forEach((feedId) => {
+        updatedCounts[feedId] = 0;
+      });
+    } else {
+      // 全部：所有 feed 计数归 0
+      Object.keys(updatedCounts).forEach((feedId) => {
+        updatedCounts[feedId] = 0;
+      });
+    }
+
+    unreadCounts.set(updatedCounts);
   } catch (err) {
-    // 发生错误时回滚UI状态
-    filteredArticles.set(articles);
     console.error("标记已读失败:", err);
     throw err;
   }
