@@ -269,43 +269,43 @@ export async function markAllAsRead(type = "all", id = null) {
 export async function markAboveAsRead(articleId) {
   const articles = filteredArticles.get();
   const articleIndex = articles.findIndex((a) => a.id === articleId);
-  
+
   if (articleIndex < 0) {
     return; // Article not found
   }
-  
+
   // Get all articles above and including the current one that are unread
   const articlesToMark = articles
     .slice(0, articleIndex + 1)
     .filter((article) => article.status !== "read");
-  
+
   if (articlesToMark.length === 0) {
     return;
   }
-  
+
   // Group by feed for count updates
   const articlesByFeed = articlesToMark.reduce((acc, article) => {
     acc[article.feedId] = acc[article.feedId] || [];
     acc[article.feedId].push(article);
     return acc;
   }, {});
-  
+
   // Optimistically update UI
   filteredArticles.set(
-    articles.map((article) => 
+    articles.map((article) =>
       articlesToMark.some((a) => a.id === article.id)
         ? { ...article, status: "read" }
         : article
     ),
   );
-  
+
   try {
     await Promise.all([
       // Update server
       navigator.onLine && Promise.all(
         articlesToMark.map((article) => minifluxAPI.updateEntryStatus(article))
       ),
-      
+
       // Update local database
       addArticles(
         articlesToMark.map((article) => ({
@@ -313,24 +313,19 @@ export async function markAboveAsRead(articleId) {
           status: "read",
         })),
       ),
-      
-      // Update unread counts
+
+      // Update unread counts using subtraction
       (async () => {
-        const counts = {};
-        const feedIds = Object.keys(articlesByFeed);
-        
-        const unreadCountsArray = await Promise.all(
-          feedIds.map((feedId) => getUnreadCount(feedId)),
-        );
-        
-        feedIds.forEach((feedId, index) => {
-          counts[feedId] = unreadCountsArray[index];
+        const currentCounts = unreadCounts.get();
+        const updatedCounts = { ...currentCounts };
+
+        // Subtract the number of marked articles from each feed's count
+        Object.entries(articlesByFeed).forEach(([feedId, articles]) => {
+          const currentCount = currentCounts[feedId] || 0;
+          updatedCounts[feedId] = Math.max(0, currentCount - articles.length);
         });
-        
-        unreadCounts.set({
-          ...unreadCounts.get(),
-          ...counts,
-        });
+
+        unreadCounts.set(updatedCounts);
       })(),
     ].filter(Boolean));
   } catch (err) {
@@ -344,43 +339,43 @@ export async function markAboveAsRead(articleId) {
 export async function markBelowAsRead(articleId) {
   const articles = filteredArticles.get();
   const articleIndex = articles.findIndex((a) => a.id === articleId);
-  
+
   if (articleIndex === -1 || articleIndex >= articles.length - 1) {
     return; // No articles below
   }
-  
+
   // Get all articles below the current one that are unread
   const articlesToMark = articles
     .slice(articleIndex)
     .filter((article) => article.status !== "read");
-  
+
   if (articlesToMark.length === 0) {
     return;
   }
-  
+
   // Group by feed for count updates
   const articlesByFeed = articlesToMark.reduce((acc, article) => {
     acc[article.feedId] = acc[article.feedId] || [];
     acc[article.feedId].push(article);
     return acc;
   }, {});
-  
+
   // Optimistically update UI
   filteredArticles.set(
-    articles.map((article) => 
+    articles.map((article) =>
       articlesToMark.some((a) => a.id === article.id)
         ? { ...article, status: "read" }
         : article
     ),
   );
-  
+
   try {
     await Promise.all([
       // Update server
       navigator.onLine && Promise.all(
         articlesToMark.map((article) => minifluxAPI.updateEntryStatus(article))
       ),
-      
+
       // Update local database
       addArticles(
         articlesToMark.map((article) => ({
@@ -388,24 +383,19 @@ export async function markBelowAsRead(articleId) {
           status: "read",
         })),
       ),
-      
-      // Update unread counts
+
+      // Update unread counts using subtraction
       (async () => {
-        const counts = {};
-        const feedIds = Object.keys(articlesByFeed);
-        
-        const unreadCountsArray = await Promise.all(
-          feedIds.map((feedId) => getUnreadCount(feedId)),
-        );
-        
-        feedIds.forEach((feedId, index) => {
-          counts[feedId] = unreadCountsArray[index];
+        const currentCounts = unreadCounts.get();
+        const updatedCounts = { ...currentCounts };
+
+        // Subtract the number of marked articles from each feed's count
+        Object.entries(articlesByFeed).forEach(([feedId, articles]) => {
+          const currentCount = currentCounts[feedId] || 0;
+          updatedCounts[feedId] = Math.max(0, currentCount - articles.length);
         });
-        
-        unreadCounts.set({
-          ...unreadCounts.get(),
-          ...counts,
-        });
+
+        unreadCounts.set(updatedCounts);
       })(),
     ].filter(Boolean));
   } catch (err) {
