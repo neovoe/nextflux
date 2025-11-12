@@ -69,9 +69,9 @@ const ContextMenu = ({ isOpen, onClose, position, children }) => {
     <div
       ref={menuRef}
       className={cn(
-        "fixed z-[9999] min-w-[180px] rounded-lg",
-        "bg-content1 shadow-lg border border-divider",
-        "py-1 animate-in fade-in-0 zoom-in-95 duration-100"
+        "fixed z-[9999] min-w-[200px] rounded-large",
+        "bg-content1 shadow-medium",
+        "p-2 animate-in fade-in-0 zoom-in-95 duration-100",
       )}
       style={{
         left: position?.x || 0,
@@ -80,7 +80,7 @@ const ContextMenu = ({ isOpen, onClose, position, children }) => {
     >
       {children}
     </div>,
-    document.body
+    document.body,
   );
 };
 
@@ -96,12 +96,11 @@ const ContextMenuItem = ({ onClick, children, className }) => {
       onClick={handleClick}
       onTouchEnd={handleClick}
       className={cn(
-        "px-3 py-2 cursor-pointer text-sm",
-        "hover:bg-default/40 active:bg-default/60",
+        "px-2 py-1.5 cursor-pointer rounded-small text-small",
+        "hover:bg-default/40 hover:text-default-foreground active:bg-default/60",
         "transition-colors duration-150",
         "select-none",
-        "text-foreground",
-        className
+        className,
       )}
     >
       {children}
