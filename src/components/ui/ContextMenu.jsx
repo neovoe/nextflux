@@ -84,7 +84,7 @@ const ContextMenu = ({ isOpen, onClose, position, children }) => {
   );
 };
 
-const ContextMenuItem = ({ onClick, children, className }) => {
+const ContextMenuItem = ({ onClick, children, className, startContent }) => {
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -100,9 +100,11 @@ const ContextMenuItem = ({ onClick, children, className }) => {
         "hover:bg-default/40 hover:text-default-foreground active:bg-default/60",
         "transition-colors duration-150",
         "select-none",
+        "flex gap-2 items-center",
         className,
       )}
     >
+      {startContent}
       {children}
     </div>
   );

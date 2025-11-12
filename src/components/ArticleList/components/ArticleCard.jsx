@@ -1,5 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Clock, Star } from "lucide-react";
+import {
+  Clock,
+  ArrowUpFromLine,
+  Star,
+  ArrowDownFromLine,
+  Circle,
+  CircleDot,
+} from "lucide-react";
 import {
   cleanTitle,
   cn,
@@ -8,7 +15,7 @@ import {
 } from "@/lib/utils";
 import { formatPublishDate } from "@/lib/format";
 import ArticleCardCover from "./ArticleCardCover.jsx";
-import { 
+import {
   handleMarkStatus,
   handleMarkAboveAsRead,
   handleMarkBelowAsRead,
@@ -38,7 +45,10 @@ export default function ArticleCard({ article }) {
   } = useStore(settingsState);
   const hasBeenVisible = useRef(false);
   const { ripples, onClear, onPress } = useRipple();
-  const [contextMenu, setContextMenu] = useState({ isOpen: false, position: { x: 0, y: 0 } });
+  const [contextMenu, setContextMenu] = useState({
+    isOpen: false,
+    position: { x: 0, y: 0 },
+  });
 
   const imageUrl = useMemo(() => extractFirstImage(article), [article]);
   const feedTitle = useMemo(() => {
@@ -125,7 +135,7 @@ export default function ArticleCard({ article }) {
     e.preventDefault();
     setContextMenu({
       isOpen: true,
-      position: { x: e.clientX, y: e.clientY }
+      position: { x: e.clientX, y: e.clientY },
     });
   };
 
@@ -142,104 +152,105 @@ export default function ArticleCard({ article }) {
           "relative transform-gpu transition-background duration-200",
           "bg-transparent contain-content",
           "hover:bg-background/70",
-          parseInt(articleId) === article.id && "bg-background/70 shadow-custom",
+          parseInt(articleId) === article.id &&
+            "bg-background/70 shadow-custom",
         )}
         data-article-id={article.id}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
       >
-          <Ripple
-            ripples={ripples}
-            onClear={onClear}
-            color="hsl(var(--heroui-content4))"
-          />
-          <div
-            className={cn(
-              "card-content flex flex-col gap-1 transition-opacity",
-              article.status === "read" && article.starred === 0 && "opacity-50",
-            )}
-          >
-            <div className="card-header flex flex-col gap-1">
-              <div className="card-meta flex items-start justify-between gap-1">
-                <div className="card-source flex items-center flex-1 gap-1 min-w-0">
-                  <div className="card-source-content flex gap-1 items-center min-w-0">
-                    {showFavicon && <FeedIcon feedId={article.feedId} />}
-                    <span className="card-source-title text-default-500 font-bold text-xs line-clamp-1">
-                      {feedTitle}
-                    </span>
-                  </div>
-                </div>
-                <div className="card-time-wrapper flex items-center gap-1 text-xs text-default-400">
-                  <span className="card-star">
-                    <Star
-                      className="size-3 fill-current"
-                      style={{ opacity: article.starred === 1 ? 1 : 0 }}
-                    />
-                  </span>
-                  <span className="card-time whitespace-nowrap">
-                    {formatPublishDate(article.published_at)}
+        <Ripple
+          ripples={ripples}
+          onClear={onClear}
+          color="hsl(var(--heroui-content4))"
+        />
+        <div
+          className={cn(
+            "card-content flex flex-col gap-1 transition-opacity",
+            article.status === "read" && article.starred === 0 && "opacity-50",
+          )}
+        >
+          <div className="card-header flex flex-col gap-1">
+            <div className="card-meta flex items-start justify-between gap-1">
+              <div className="card-source flex items-center flex-1 gap-1 min-w-0">
+                <div className="card-source-content flex gap-1 items-center min-w-0">
+                  {showFavicon && <FeedIcon feedId={article.feedId} />}
+                  <span className="card-source-title text-default-500 font-bold text-xs line-clamp-1">
+                    {feedTitle}
                   </span>
                 </div>
               </div>
-              <div className="card-content-body flex gap-2">
-                <div className="flex flex-col gap-1 flex-1">
-                  <h3
+              <div className="card-time-wrapper flex items-center gap-1 text-xs text-default-400">
+                <span className="card-star">
+                  <Star
+                    className="size-3 fill-current"
+                    style={{ opacity: article.starred === 1 ? 1 : 0 }}
+                  />
+                </span>
+                <span className="card-time whitespace-nowrap">
+                  {formatPublishDate(article.published_at)}
+                </span>
+              </div>
+            </div>
+            <div className="card-content-body flex gap-2">
+              <div className="flex flex-col gap-1 flex-1">
+                <h3
+                  className={cn(
+                    "card-title text-base font-semibold text-wrap break-words",
+                    article.status === "read"
+                      ? "text-content2-foreground"
+                      : "text-foreground",
+                  )}
+                  style={{
+                    wordBreak: "break-word",
+                    overflow: "hidden",
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: titleLines === 0 ? "none" : titleLines,
+                  }}
+                >
+                  {cleanTitle(article.title)}
+                </h3>
+                {showReadingTime && (
+                  <div className="text-xs text-default-500 flex items-center gap-1">
+                    <Clock className="size-3 shrink-0" />
+                    <span className="line-clamp-1">
+                      {article.reading_time === 0
+                        ? t("common.lessThanAMinute")
+                        : `${article.reading_time} ${t("common.minute")}`}
+                    </span>
+                  </div>
+                )}
+                {textPreviewLines !== 0 && (
+                  <span
                     className={cn(
-                      "card-title text-base font-semibold text-wrap break-words",
-                      article.status === "read"
-                        ? "text-content2-foreground"
-                        : "text-foreground",
+                      "text-sm text-default-500 text-wrap break-words w-full max-w-full overflow-hidden",
                     )}
                     style={{
                       wordBreak: "break-word",
                       overflow: "hidden",
                       display: "-webkit-box",
                       WebkitBoxOrient: "vertical",
-                      WebkitLineClamp: titleLines === 0 ? "none" : titleLines,
+                      WebkitLineClamp: textPreviewLines,
                     }}
                   >
-                    {cleanTitle(article.title)}
-                  </h3>
-                  {showReadingTime && (
-                    <div className="text-xs text-default-500 flex items-center gap-1">
-                      <Clock className="size-3 shrink-0" />
-                      <span className="line-clamp-1">
-                        {article.reading_time === 0
-                          ? t("common.lessThanAMinute")
-                          : `${article.reading_time} ${t("common.minute")}`}
-                      </span>
-                    </div>
-                  )}
-                  {textPreviewLines !== 0 && (
-                    <span
-                      className={cn(
-                        "text-sm text-default-500 text-wrap break-words w-full max-w-full overflow-hidden",
-                      )}
-                      style={{
-                        wordBreak: "break-word",
-                        overflow: "hidden",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: textPreviewLines,
-                      }}
-                    >
-                      {previewContent}
-                    </span>
-                  )}
-                  {cardImageSize === "large" && (
-                    <ArticleCardCover imageUrl={imageUrl} />
-                  )}
-                </div>
-                {cardImageSize === "small" && (
+                    {previewContent}
+                  </span>
+                )}
+                {cardImageSize === "large" && (
                   <ArticleCardCover imageUrl={imageUrl} />
                 )}
               </div>
+              {cardImageSize === "small" && (
+                <ArticleCardCover imageUrl={imageUrl} />
+              )}
             </div>
           </div>
         </div>
-      
-      <ContextMenu 
-        isOpen={contextMenu.isOpen} 
+      </div>
+
+      <ContextMenu
+        isOpen={contextMenu.isOpen}
         onClose={closeContextMenu}
         position={contextMenu.position}
       >
@@ -248,6 +259,7 @@ export default function ArticleCard({ article }) {
             handleMarkAboveAsRead(article.id);
             closeContextMenu();
           }}
+          startContent={<ArrowUpFromLine className="size-4 text-default-500" />}
         >
           {t("common.markAboveAsRead")}
         </ContextMenuItem>
@@ -256,14 +268,26 @@ export default function ArticleCard({ article }) {
             handleMarkStatus(article);
             closeContextMenu();
           }}
+          startContent={
+            article.status === "read" ? (
+              <CircleDot className="size-4 text-default-500 p-0.5 fill-current" />
+            ) : (
+              <Circle className="size-4 text-default-500 p-0.5" />
+            )
+          }
         >
-          {article.status === "read" ? t("common.markAsUnread") : t("common.markAsRead")}
+          {article.status === "read"
+            ? t("common.markAsUnread")
+            : t("common.markAsRead")}
         </ContextMenuItem>
         <ContextMenuItem
           onClick={() => {
             handleMarkBelowAsRead(article.id);
             closeContextMenu();
           }}
+          startContent={
+            <ArrowDownFromLine className="size-4 text-default-500" />
+          }
         >
           {t("common.markBelowAsRead")}
         </ContextMenuItem>

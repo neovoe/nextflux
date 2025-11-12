@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { TriangleAlert } from "lucide-react";
+import { RefreshCw, CircleCheck, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   SidebarMenuSubButton,
@@ -20,13 +20,16 @@ const FeedItem = ({ feed }) => {
   const { isMobile, setOpenMobile } = useSidebar();
   const { feedId } = useParams();
   const $getFeedCount = useStore(getFeedCount);
-  const [contextMenu, setContextMenu] = useState({ isOpen: false, position: { x: 0, y: 0 } });
+  const [contextMenu, setContextMenu] = useState({
+    isOpen: false,
+    position: { x: 0, y: 0 },
+  });
 
   const handleContextMenu = (e) => {
     e.preventDefault();
     setContextMenu({
       isOpen: true,
-      position: { x: e.clientX, y: e.clientY }
+      position: { x: e.clientX, y: e.clientY },
     });
   };
 
@@ -63,9 +66,9 @@ const FeedItem = ({ feed }) => {
           </span>
         </Link>
       </SidebarMenuSubButton>
-      
-      <ContextMenu 
-        isOpen={contextMenu.isOpen} 
+
+      <ContextMenu
+        isOpen={contextMenu.isOpen}
         onClose={closeContextMenu}
         position={contextMenu.position}
       >
@@ -74,6 +77,7 @@ const FeedItem = ({ feed }) => {
             handleRefresh(feed.id);
             closeContextMenu();
           }}
+          startContent={<RefreshCw className="size-4 text-default-500" />}
         >
           {t("common.refresh")}
         </ContextMenuItem>
@@ -82,6 +86,7 @@ const FeedItem = ({ feed }) => {
             handleMarkAllRead("feed", feed.id);
             closeContextMenu();
           }}
+          startContent={<CircleCheck className="size-4 text-default-500" />}
         >
           {t("common.markAllRead")}
         </ContextMenuItem>
