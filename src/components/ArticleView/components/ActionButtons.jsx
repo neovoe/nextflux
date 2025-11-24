@@ -117,7 +117,7 @@ export default function ActionButtons({ parentRef }) {
       classNames={{ wrapper: "px-2 h-auto", content: "gap-0" }}
     >
       <NavbarContent className="flex items-center space-between">
-        <div className="flex items-center gap-1 bg-background/70 backdrop-blur-lg shadow-custom rounded-full p-1 mr-2">
+        <div className="flex items-center gap-1 bg-background/30 backdrop-blur-lg shadow-custom rounded-full p-0.5 mr-2">
           <Tooltip
             content={t("common.close")}
             classNames={{ content: "shadow-custom!" }}
@@ -134,7 +134,7 @@ export default function ActionButtons({ parentRef }) {
             </Button>
           </Tooltip>
         </div>
-        <div className="hidden md:flex items-center gap-1 bg-background/70 backdrop-blur-lg shadow-custom rounded-full p-1">
+        <div className="hidden md:flex items-center gap-1 bg-background/30 backdrop-blur-lg shadow-custom rounded-full p-0.5">
           <Tooltip
             content={t("common.previous")}
             classNames={{ content: "shadow-custom!" }}
@@ -168,7 +168,7 @@ export default function ActionButtons({ parentRef }) {
             </Button>
           </Tooltip>
         </div>
-        <div className="ml-auto flex items-center gap-1 bg-background/70 backdrop-blur-lg shadow-custom rounded-full p-1">
+        <div className="ml-auto flex items-center gap-1 bg-background/30 backdrop-blur-lg shadow-custom rounded-full p-0.5">
           <Tooltip
             content={
               $activeArticle?.status === "read"

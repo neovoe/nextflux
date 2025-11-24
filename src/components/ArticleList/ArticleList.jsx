@@ -17,6 +17,7 @@ import ArticleListFooter from "./components/ArticleListFooter";
 import { settingsState } from "@/stores/settingsStore.js";
 import ArticleView from "@/components/ArticleView/ArticleView.jsx";
 import Indicator from "@/components/ArticleList/components/Indicator.jsx";
+import { cn } from "@heroui/react";
 
 const ArticleList = () => {
   const { feedId, categoryId } = useParams();
@@ -29,6 +30,7 @@ const ArticleList = () => {
     sortField,
     showHiddenFeeds,
     showIndicator,
+    floatingSidebar,
   } = useStore(settingsState);
   const virtuosoRef = useRef(null);
 
@@ -93,7 +95,12 @@ const ArticleList = () => {
 
   return (
     <div className="main-content flex">
-      <div className="w-full relative max-w-screen md:w-84 md:max-w-[30%] md:min-w-[18rem] h-dvh flex flex-col md:border-r">
+      <div
+        className={cn(
+          "w-full relative max-w-screen md:w-84 md:max-w-[30%] md:min-w-[18rem] h-dvh flex flex-col",
+          floatingSidebar ? "md:border-r" : "",
+        )}
+      >
         <ArticleListHeader />
         {showIndicator && <Indicator virtuosoRef={virtuosoRef} />}
         <ArticleListContent

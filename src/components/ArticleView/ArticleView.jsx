@@ -42,6 +42,7 @@ const ArticleView = () => {
     titleFontSize,
     titleAlignType,
     reduceMotion,
+    floatingSidebar,
   } = useStore(settingsState);
   const { lightTheme } = useStore(themeState);
   const $currentThemeMode = useStore(currentThemeMode);
@@ -107,7 +108,10 @@ const ArticleView = () => {
       return (
         <>
           {imgNodes.map((imgNode, index) => (
-            <ArticleImage imgNode={imgNode} key={imgNode.attribs?.src || index} />
+            <ArticleImage
+              imgNode={imgNode}
+              key={imgNode.attribs?.src || index}
+            />
           ))}
           <div className="flex justify-center">
             <Chip
@@ -146,7 +150,7 @@ const ArticleView = () => {
         <motion.div
           key={articleId ? "content" : "empty"}
           className={cn(
-            "flex-1 p-0 h-screen fixed md:static inset-0 z-20",
+            "flex-1 p-0 h-screen fixed md:static inset-0 z-20 md:pr-2 md:py-2",
             !articleId ? "hidden md:flex md:flex-1" : "",
           )}
           initial={
@@ -171,7 +175,12 @@ const ArticleView = () => {
             <ScrollShadow
               ref={scrollAreaRef}
               isEnabled={false}
-              className="article-scroll-area h-full bg-content2 md:bg-transparent"
+              className={cn(
+                "article-scroll-area h-full bg-content2 md:bg-transparent",
+                floatingSidebar
+                  ? "md:bg-transparent"
+                  : "md:bg-background md:shadow-custom md:rounded-2xl",
+              )}
             >
               <ActionButtons parentRef={scrollAreaRef} />
 
@@ -200,9 +209,12 @@ const ArticleView = () => {
                   >
                     <button
                       type="button"
-                      onClick={() => navigate(`/feed/${$activeArticle?.feed?.id}`)}
+                      onClick={() =>
+                        navigate(`/feed/${$activeArticle?.feed?.id}`)
+                      }
                       onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") navigate(`/feed/${$activeArticle?.feed?.id}`);
+                        if (e.key === "Enter" || e.key === " ")
+                          navigate(`/feed/${$activeArticle?.feed?.id}`);
                       }}
                       className={cn(
                         "text-default-500 text-sm flex items-center gap-1 hover:cursor-pointer focus:outline-none",
