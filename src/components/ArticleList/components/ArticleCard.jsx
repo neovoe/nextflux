@@ -1,12 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Clock,
-  ArrowUpFromLine,
-  Star,
-  ArrowDownFromLine,
-  Circle,
-  CircleDot,
-} from "lucide-react";
+import { Clock, ArrowUpFromLine, Star, Circle, CircleDot } from "lucide-react";
 import {
   cleanTitle,
   cn,
@@ -18,7 +11,6 @@ import ArticleCardCover from "./ArticleCardCover.jsx";
 import {
   handleMarkStatus,
   handleMarkAboveAsRead,
-  handleMarkBelowAsRead,
 } from "@/handlers/articleHandlers.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "@nanostores/react";
@@ -279,17 +271,6 @@ export default function ArticleCard({ article }) {
           {article.status === "read"
             ? t("common.markAsUnread")
             : t("common.markAsRead")}
-        </ContextMenuItem>
-        <ContextMenuItem
-          onClick={() => {
-            handleMarkBelowAsRead(article.id);
-            closeContextMenu();
-          }}
-          startContent={
-            <ArrowDownFromLine className="size-4 text-default-500" />
-          }
-        >
-          {t("common.markBelowAsRead")}
         </ContextMenuItem>
       </ContextMenu>
     </>

@@ -64,7 +64,7 @@ export default function AddCategoryModal() {
           onValueChange={setTitle}
         />
         <Divider className="my-2" />
-        <div className="flex flex-wrap gap-2 p-3 bg-content2 rounded-lg shadow-custom-inner">
+        <div className="flex flex-wrap gap-2 p-3 bg-content2 rounded-lg shadow-custom-inner w-full">
           {$categories.map((category) => (
             <CategoryChip key={category.id} category={category} />
           ))}
