@@ -70,8 +70,8 @@ const ContextMenu = ({ isOpen, onClose, position, children }) => {
       ref={menuRef}
       className={cn(
         "fixed z-[9999] min-w-[200px] rounded-large",
-        "bg-content1 shadow-medium",
-        "p-2 animate-in fade-in-0 zoom-in-95 duration-100",
+        "bg-content1/60 backdrop-blur shadow-medium",
+        "p-2 animate-in fade-in-0 zoom-in-95 duration-200",
       )}
       style={{
         left: position?.x || 0,

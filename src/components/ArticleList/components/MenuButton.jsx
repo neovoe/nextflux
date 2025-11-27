@@ -18,6 +18,7 @@ import {
     editFeedModalOpen,
     renameModalOpen,
     unsubscribeModalOpen,
+    currentFeedId,
   } from "@/stores/modalStore.js";
   import { useTranslation } from "react-i18next";
   import { handleRefresh } from "@/handlers/feedHandlers";
@@ -51,7 +52,10 @@ import {
               </DropdownItem>
               <DropdownItem
                 key="edit"
-                onPress={() => editFeedModalOpen.set(true)}
+                onPress={() => {
+                  currentFeedId.set(feedId);
+                  editFeedModalOpen.set(true);
+                }}
                 startContent={<FilePen className="size-4 text-default-500" />}
               >
                 {t("articleList.editFeed")}
@@ -68,7 +72,10 @@ import {
                 className="text-danger"
                 color="danger"
                 variant="flat"
-                onPress={() => unsubscribeModalOpen.set(true)}
+                onPress={() => {
+                  currentFeedId.set(feedId);
+                  unsubscribeModalOpen.set(true);
+                }}
                 startContent={<Trash2 className="size-4" />}
               >
                 {t("articleList.unsubscribe")}

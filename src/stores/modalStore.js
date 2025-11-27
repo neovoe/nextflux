@@ -11,6 +11,11 @@ export const aboutModalOpen = atom(false);
 export const searchDialogOpen = atom(false);
 export const settingsModalOpen = atom(false);
 
+// 存储当前操作的 feedId（用于侧边栏右键菜单）
+export const currentFeedId = atom(null);
+// 存储当前操作的 categoryId（用于侧边栏右键菜单）
+export const currentCategoryId = atom(null);
+
 
 export const isModalOpen = computed([
   addFeedModalOpen,

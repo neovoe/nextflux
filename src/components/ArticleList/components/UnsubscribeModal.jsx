@@ -1,5 +1,5 @@
 import minifluxAPI from "@/api/miniflux";
-import { unsubscribeModalOpen } from "@/stores/modalStore.js";
+import { unsubscribeModalOpen, currentFeedId } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { feeds } from "@/stores/feedsStore";
@@ -15,17 +15,24 @@ import { starredCounts, unreadCounts } from "@/stores/feedsStore";
 export default function UnsubscribeModal() {
   const { t } = useTranslation();
   const $feeds = useStore(feeds);
-  const { feedId } = useParams();
+  const { feedId: routeFeedId } = useParams();
   const $unsubscribeModalOpen = useStore(unsubscribeModalOpen);
+  const $currentFeedId = useStore(currentFeedId);
+  // 优先使用 store 中的 feedId，如果没有则使用路由参数中的 feedId
+  const feedId = $currentFeedId || routeFeedId;
   const navigate = useNavigate();
 
-  const feedTitle = $feeds.find((f) => f.id === parseInt(feedId))?.title;
+  const feedTitle = feedId
+    ? $feeds.find((f) => f.id === parseInt(feedId))?.title
+    : "";
 
   const onClose = () => {
     unsubscribeModalOpen.set(false);
+    currentFeedId.set(null); // 清除 store 中的 feedId
   };
 
   const handleUnsubscribe = async () => {
+    if (!feedId) return;
     try {
       const feedIdInt = parseInt(feedId);
       // 从服务器删除订阅源
@@ -47,6 +54,7 @@ export default function UnsubscribeModal() {
         [feedIdInt]: 0,
       });
 
+      // onClose(); // 关闭模态框并清除 feedId
       navigate("/"); // 取消订阅后返回首页
     } catch (error) {
       console.error("取消订阅失败:", error);

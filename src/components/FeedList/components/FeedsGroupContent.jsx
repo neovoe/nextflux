@@ -5,7 +5,7 @@ import {
   updateCategoryExpandState,
 } from "@/stores/feedsStore.js";
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, FolderPen } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -21,15 +21,23 @@ import {
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar.jsx";
 import { settingsState } from "@/stores/settingsStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FeedItem from "./FeedItem";
+import { ContextMenu, ContextMenuItem } from "@/components/ui/ContextMenu";
+import { renameModalOpen, currentCategoryId } from "@/stores/modalStore.js";
+import { useTranslation } from "react-i18next";
 
 const FeedsGroupContent = ({ category }) => {
+  const { t } = useTranslation();
   const $getCategoryCount = useStore(getCategoryCount);
   const { isMobile, setOpenMobile } = useSidebar();
   const { categoryId, feedId } = useParams();
   const { defaultExpandCategory } = useStore(settingsState);
   const $categoryExpandedState = useStore(categoryExpandedState);
+  const [contextMenu, setContextMenu] = useState({
+    isOpen: false,
+    position: { x: 0, y: 0 },
+  });
 
   useEffect(() => {
     if (feedId) {
@@ -48,6 +56,18 @@ const FeedsGroupContent = ({ category }) => {
     }
   }, [feedId, category.id]);
 
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    setContextMenu({
+      isOpen: true,
+      position: { x: e.clientX, y: e.clientY },
+    });
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu({ isOpen: false, position: { x: 0, y: 0 } });
+  };
+
   return (
     <Collapsible
       key={category.id}
@@ -64,6 +84,7 @@ const FeedsGroupContent = ({ category }) => {
           <Link
             to={`/category/${category.id}`}
             onClick={() => isMobile && setOpenMobile(false)}
+            onContextMenu={handleContextMenu}
           >
             <span className={"pl-6 font-medium"}>{category.title}</span>
           </Link>
@@ -85,6 +106,26 @@ const FeedsGroupContent = ({ category }) => {
             ))}
           </SidebarMenuSub>
         </CollapsibleContent>
+
+        <ContextMenu
+          isOpen={contextMenu.isOpen}
+          onClose={closeContextMenu}
+          position={contextMenu.position}
+        >
+          <div className="px-2 py-1.5 text-tiny font-medium text-default-400 line-clamp-1">
+            {category.title}
+          </div>
+          <ContextMenuItem
+            onClick={() => {
+              currentCategoryId.set(category.id.toString());
+              renameModalOpen.set(true);
+              closeContextMenu();
+            }}
+            startContent={<FolderPen className="size-4 text-default-500" />}
+          >
+            {t("articleList.renameCategory.title")}
+          </ContextMenuItem>
+        </ContextMenu>
       </SidebarMenuItem>
     </Collapsible>
   );

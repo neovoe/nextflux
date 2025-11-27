@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { RefreshCw, CircleCheck, TriangleAlert } from "lucide-react";
+import {
+  RefreshCw,
+  CircleCheck,
+  TriangleAlert,
+  FilePen,
+  Trash2,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   SidebarMenuSubButton,
@@ -14,6 +20,11 @@ import { handleRefresh } from "@/handlers/feedHandlers";
 import { handleMarkAllRead } from "@/handlers/articleHandlers";
 import { useStore } from "@nanostores/react";
 import { getFeedCount } from "@/stores/feedsStore.js";
+import {
+  editFeedModalOpen,
+  unsubscribeModalOpen,
+  currentFeedId,
+} from "@/stores/modalStore.js";
 
 const FeedItem = ({ feed }) => {
   const { t } = useTranslation();
@@ -72,6 +83,9 @@ const FeedItem = ({ feed }) => {
         onClose={closeContextMenu}
         position={contextMenu.position}
       >
+        <div className="px-2 py-1.5 text-tiny font-medium text-default-400 line-clamp-1">
+          {feed.title}
+        </div>
         <ContextMenuItem
           onClick={() => {
             handleRefresh(feed.id);
@@ -89,6 +103,28 @@ const FeedItem = ({ feed }) => {
           startContent={<CircleCheck className="size-4 text-default-500" />}
         >
           {t("common.markAllRead")}
+        </ContextMenuItem>
+        <ContextMenuItem
+          onClick={() => {
+            currentFeedId.set(feed.id.toString());
+            editFeedModalOpen.set(true);
+            closeContextMenu();
+          }}
+          startContent={<FilePen className="size-4 text-default-500" />}
+        >
+          {t("articleList.editFeed")}
+        </ContextMenuItem>
+        <div className="my-2 border-t border-divider" />
+        <ContextMenuItem
+          onClick={() => {
+            currentFeedId.set(feed.id.toString());
+            unsubscribeModalOpen.set(true);
+            closeContextMenu();
+          }}
+          className="text-danger! hover:bg-danger/20!"
+          startContent={<Trash2 className="size-4" />}
+        >
+          {t("articleList.unsubscribe")}
         </ContextMenuItem>
       </ContextMenu>
     </SidebarMenuSubItem>

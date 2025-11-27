@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "@heroui/react";
 import { useEffect, useState } from "react";
 import minifluxAPI from "@/api/miniflux";
-import { renameModalOpen } from "@/stores/modalStore.js";
+import { renameModalOpen, currentCategoryId } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
 import { useParams } from "react-router-dom";
 import { categories } from "@/stores/feedsStore";
@@ -12,22 +12,31 @@ import { updateCategory } from "@/db/storage";
 export default function RenameModal() {
   const { t } = useTranslation();
   const $categories = useStore(categories);
-  const { categoryId } = useParams();
+  const { categoryId: urlCategoryId } = useParams();
+  const $currentCategoryId = useStore(currentCategoryId);
+  // 优先使用 currentCategoryId（来自右键菜单），否则使用 URL 中的 categoryId
+  const categoryId = $currentCategoryId || urlCategoryId;
   const [newTitle, setNewTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const $renameModalOpen = useStore(renameModalOpen);
 
   useEffect(() => {
-    setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title);
+    if (categoryId) {
+      setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title || "");
+    }
   }, [$categories, categoryId]);
 
   const onClose = () => {
     renameModalOpen.set(false);
-    setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title);
+    currentCategoryId.set(null);
+    if (categoryId) {
+      setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title || "");
+    }
   };
 
   const handleRename = async (e) => {
     e.preventDefault();
+    if (!categoryId) return;
     try {
       setLoading(true);
       await minifluxAPI.updateCategory(categoryId, newTitle);

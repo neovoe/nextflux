@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { useStore } from "@nanostores/react";
 import { categories, feeds } from "@/stores/feedsStore";
-import { editFeedModalOpen } from "@/stores/modalStore";
+import { editFeedModalOpen, currentFeedId } from "@/stores/modalStore";
 import { useParams } from "react-router-dom";
 import minifluxAPI from "@/api/miniflux";
 import { forceSync } from "@/stores/syncStore";
@@ -23,10 +23,13 @@ import CustomModal from "@/components/ui/CustomModal.jsx";
 
 export default function EditFeedModal() {
   const { t } = useTranslation();
-  const { feedId } = useParams();
+  const { feedId: routeFeedId } = useParams();
   const $feeds = useStore(feeds);
   const $categories = useStore(categories);
   const $editFeedModalOpen = useStore(editFeedModalOpen);
+  const $currentFeedId = useStore(currentFeedId);
+  // 优先使用 store 中的 feedId，如果没有则使用路由参数中的 feedId
+  const feedId = $currentFeedId || routeFeedId;
   const [loading, setLoading] = useState(false);
   const [feedUrl, setFeedUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
@@ -60,17 +63,22 @@ export default function EditFeedModal() {
 
   const onClose = () => {
     editFeedModalOpen.set(false);
-    const feed = $feeds.find((f) => f.id === parseInt(feedId));
-    setFormData({
-      title: feed.title,
-      category_id: feed.categoryId,
-      hide_globally: feed.hide_globally,
-      crawler: feed.crawler,
-      keeplist_rules: feed.keeplist_rules,
-      blocklist_rules: feed.blocklist_rules,
-      rewrite_rules: feed.rewrite_rules,
-    });
-    setFeedUrl(feed.url);
+    currentFeedId.set(null); // 清除 store 中的 feedId
+    if (feedId) {
+      const feed = $feeds.find((f) => f.id === parseInt(feedId));
+      if (feed) {
+        setFormData({
+          title: feed.title,
+          category_id: feed.categoryId,
+          hide_globally: feed.hide_globally,
+          crawler: feed.crawler,
+          keeplist_rules: feed.keeplist_rules,
+          blocklist_rules: feed.blocklist_rules,
+          rewrite_rules: feed.rewrite_rules,
+        });
+        setFeedUrl(feed.url);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
