@@ -25,7 +25,7 @@ export const error = atom(null);
 let syncInterval = null;
 
 const SYNC_CONFIG = {
-  BATCH_SIZE: 5000,
+  BATCH_SIZE: 1000,
   HISTORY_WINDOW: 24, // 历史同步窗口（小时）
 };
 
