@@ -1,6 +1,6 @@
 # Stage 1: Build the React application
 # Specify the version to ensure consistent builds
-FROM node:22-alpine AS build
+FROM node:20-bookworm-slim AS build
 
 # Set the working directory in the container
 WORKDIR /app
