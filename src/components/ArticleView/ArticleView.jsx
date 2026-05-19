@@ -154,7 +154,7 @@ const ArticleView = () => {
           )}
           initial={
             articleId
-              ? { opacity: 1, x: "100%" }
+              ? { opacity: 1, x: "100vw" }
               : { opacity: 0, x: 0, scale: 0.8 }
           }
           animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -162,7 +162,7 @@ const ArticleView = () => {
             !articleId && isMedium
               ? false
               : articleId
-                ? { opacity: 1, x: "100%", scale: 1 }
+                ? { opacity: 1, x: "100vw", scale: 1 }
                 : { opacity: 0, x: 0, scale: 0.8 }
           }
           transition={{
