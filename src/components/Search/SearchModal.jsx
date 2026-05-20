@@ -108,15 +108,16 @@ export default function SearchModal() {
         variant="transparent"
       >
         <Modal.Container scroll="inside" size="lg">
-          <Modal.Dialog className="w-[700px] max-w-[90vw] h-[500px] max-h-[85vh] bg-background/90 backdrop-blur-lg border shadow-2xl p-0">
-            <Modal.Header className="p-3 bg-background">
-              <InputGroup>
+          <Modal.Dialog className="w-[700px] max-w-[90vw] h-[500px] max-h-[85vh] bg-overlay/90 backdrop-blur-lg border shadow-2xl p-0">
+            <Modal.Header className="p-2 border-b">
+              <InputGroup className="bg-transparent shadow-none ring-0 ring-transparent">
                 <InputGroup.Prefix>
-                  <SearchIcon className="size-4 text-muted opacity-60" />
+                  <SearchIcon className="size-5 text-muted opacity-60 stroke-3" />
                 </InputGroup.Prefix>
                 <InputGroup.Input
                   ref={inputRef}
                   autoFocus
+                  className="text-lg"
                   placeholder={
                     searchType === "articles"
                       ? t("search.searchArticlesPlaceholder")
@@ -129,7 +130,7 @@ export default function SearchModal() {
                 />
               </InputGroup>
             </Modal.Header>
-            <Modal.Body className="p-0 m-0 bg-background">
+            <Modal.Body className="p-0 m-0">
               <SearchResults
                 results={
                   searchType === "articles"
@@ -143,7 +144,7 @@ export default function SearchModal() {
               />
             </Modal.Body>
             <Modal.Footer className="p-0 m-0">
-              <div className="w-full p-3 border-t flex items-center justify-between">
+              <div className="w-full p-2 border-t bg-background flex items-center justify-between">
                 <Tabs
                   selectedKey={searchType}
                   onSelectionChange={(key) => {
