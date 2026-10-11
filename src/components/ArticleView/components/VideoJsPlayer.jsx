@@ -72,13 +72,15 @@ function PlayerSurface({
 }) {
   const [ready, setReady] = useState(false);
   const isAudio = selection.kind === "audio";
+  const isYouTube = selection.adapter === "youtube";
   const progressEvents = useAudioProgress(isAudio ? enclosure : undefined);
-  const Skin = isAudio ? AudioSkin : VideoSkin;
+  const Skin = isYouTube ? "div" : isAudio ? AudioSkin : VideoSkin;
   const Media =
     adapterMedia[`${selection.adapter}-${selection.kind}`] ||
     (isAudio ? Audio : Video);
   const isNative = selection.adapter === "native";
-  const loading = !isAudio && !ready;
+  // YouTube's own controls must remain usable before media readiness events.
+  const loading = !isAudio && !isYouTube && !ready;
   const aspectRatio = "16 / 9";
 
   return (
@@ -94,19 +96,32 @@ function PlayerSurface({
         inert={loading || undefined}
       >
         <Skin
+          className={isYouTube ? "overflow-hidden rounded-lg" : undefined}
           style={
-            isAudio
-              ? skinStyle
-              : {
-                  ...skinStyle,
-                  aspectRatio,
-                }
+            isYouTube
+              ? { width: "100%", aspectRatio }
+              : isAudio
+                ? skinStyle
+                : {
+                    ...skinStyle,
+                    aspectRatio,
+                  }
           }
         >
-          <Suspense fallback={null}>
+          <Suspense
+            fallback={
+              isYouTube ? <MediaPlaceholder style={{ aspectRatio }} /> : null
+            }
+          >
             <Media
               src={isNative ? src : selection.src}
               source={getAdapterSource(selection)}
+              controls={isYouTube || undefined}
+              style={
+                isYouTube
+                  ? { display: "block", width: "100%", height: "100%" }
+                  : undefined
+              }
               poster={isAudio ? undefined : poster}
               playsInline
               preload="metadata"
