@@ -308,7 +308,7 @@ function AudioSurface({ track }) {
                   </span>
                 </button>
                 <AudioTimeline onInteract={interact} />
-                <div className="mt-1 flex items-center justify-between gap-1">
+                <div className="mt-1 grid grid-cols-5 items-center justify-items-center gap-1 [&_button]:aspect-square [&_button]:h-auto [&_button]:max-w-full">
                   <AudioRateButton />
                   <AudioSeekButton seconds={-15} onInteract={interact} />
                   <AudioPlayButton
@@ -345,8 +345,8 @@ function AudioSurface({ track }) {
                   <motion.div
                     initial={false}
                     animate={{
-                      width: paused ? 0 : 40,
-                      marginRight: paused ? 0 : 8,
+                      width: paused ? "0rem" : "2.5rem",
+                      marginRight: paused ? "0rem" : "0.5rem",
                       opacity: paused ? 0 : 1,
                     }}
                     transition={controlTransition}
@@ -363,7 +363,7 @@ function AudioSurface({ track }) {
                   <AudioPlayButton loading={loading} onInteract={interact} />
                   <motion.div
                     initial={false}
-                    animate={{ width: paused ? 88 : 40 }}
+                    animate={{ width: paused ? "5.5rem" : "2.5rem" }}
                     transition={controlTransition}
                     className="relative ml-2 h-10 shrink-0"
                   >
@@ -374,7 +374,7 @@ function AudioSurface({ track }) {
                         scale: paused ? 1 : 0.9,
                       }}
                       transition={controlTransition}
-                      className="absolute inset-y-0 right-0 w-[88px]"
+                      className="absolute inset-y-0 right-0 w-22"
                       inert={!paused}
                       aria-hidden={!paused}
                     >
