@@ -1,5 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
+import { audioDock } from "@/stores/audioStore.js";
 import { filter } from "@/stores/articlesStore";
 import { Circle, Star, Text } from "lucide-react";
 import { useStore } from "@nanostores/react";
@@ -9,6 +10,10 @@ export default function ArticleListFooter() {
   const $filter = useStore(filter);
   return (
     <div className="article-list-footer absolute bottom-0 w-full bg-transparent flex flex-col items-center justify-center pb-4 standalone:pb-safe-or-4">
+      <div
+        ref={audioDock.set}
+        className="absolute inset-x-0 bottom-full mb-3"
+      />
       <Tabs
         aria-label="filter"
         value={$filter}

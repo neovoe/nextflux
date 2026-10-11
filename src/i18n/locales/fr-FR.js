@@ -1,4 +1,25 @@
 export default {
+  audioPlayer: {
+    inline: "Lecteur audio de l’article",
+    playing: "En lecture",
+    paused: "En pause",
+    seek: "Position de lecture",
+    inPlayer: "Dans votre lecteur",
+    label: "Lecteur audio",
+    listen: "Écouter",
+    open: "Ouvrir le lecteur",
+    expand: "Développer le lecteur",
+    collapse: "Réduire le lecteur",
+    play: "Lire",
+    pause: "Pause",
+    close: "Arrêter et fermer",
+    article: "Revenir à l’article",
+    backward: "Reculer de 15 secondes",
+    forward: "Avancer de 30 secondes",
+    playFailed: "La lecture n’a pas démarré. Appuyez sur Lire pour réessayer.",
+    mediaFailed:
+      "Impossible de charger l’audio. Vérifiez la source ou rouvrez le lecteur.",
+  },
   common: {
     resizeFeeds: "Redimensionner la barre des flux",
     resizeArticles: "Redimensionner la liste des articles",
@@ -341,7 +362,7 @@ export default {
       media: "MÉDIAS",
       useThirdPartyMediaPlayer: "Utiliser un lecteur vidéo tiers",
       useThirdPartyMediaPlayerDescription:
-        "Fonction expérimentale : utiliser Video.js pour les contenus audio et vidéo des articles et synchroniser la progression de lecture des pièces jointes audio lorsque cette option est activée.",
+        "Fonction expérimentale : utiliser Video.js pour les vidéos des articles. L’audio utilise toujours le lecteur global avec synchronisation de la progression des pièces jointes audio.",
       toolbars: "BARRES D’OUTILS",
       readingNavigation: "NAVIGATION DE LECTURE",
       showReadingRail: "Afficher la navigation de lecture",

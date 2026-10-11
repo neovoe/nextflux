@@ -2,12 +2,12 @@ import { lazy, Suspense, useMemo } from "react";
 import parse from "html-react-parser";
 import { PhotoProvider } from "react-photo-view";
 import { useStore } from "@nanostores/react";
-import { useTranslation } from "react-i18next";
 import { settingsState } from "@/stores/settingsStore.js";
 import ArticleImage from "./ArticleImage.jsx";
 import Attachments from "./Attachments.jsx";
 import Iframe from "./Iframe.jsx";
 import MediaPlayer from "./MediaPlayer.jsx";
+import AudioLaunchButton from "@/components/GlobalAudio/AudioLaunchButton.jsx";
 import MediaLinkPill from "./MediaLinkPill.jsx";
 import { resolveMediaSource } from "@/domain/articles/mediaSource.js";
 import {
@@ -38,19 +38,24 @@ function renderLinkedImages(node) {
 }
 function replaceArticleNode(
   node,
-  articleId,
+  article,
   enclosures,
   useThirdPartyMediaPlayer,
 ) {
   if (node.type !== "tag") return undefined;
   if (node.name === "audio" || node.name === "video") {
-    if (!useThirdPartyMediaPlayer) return undefined;
+    if (node.name === "video" && !useThirdPartyMediaPlayer) return undefined;
     const media = getArticleMedia(node);
     const urls = [media.src, ...media.sources.map((source) => source.src)];
     const enclosure = enclosures?.find((item) => urls.includes(item.url));
+    if (node.name === "audio") {
+      return (
+        <AudioLaunchButton article={article} {...media} enclosure={enclosure} />
+      );
+    }
     return (
       <MediaPlayer
-        key={`${articleId}:${enclosure?.id || media.src}`}
+        key={`${article.id}:${enclosure?.id || media.src}`}
         {...media}
         enclosure={enclosure}
       />
@@ -101,7 +106,6 @@ export default function ArticleContent({
   lineHeight,
 }) {
   const { useThirdPartyMediaPlayer } = useStore(settingsState);
-  const { t } = useTranslation();
   const { content, inlineUrls } = useMemo(() => {
     const inlineUrls = [];
     const content = parse(article.content, {
@@ -120,48 +124,39 @@ export default function ArticleContent({
           inlineUrls.push(node.attribs.src);
         return replaceArticleNode(
           node,
-          article.id,
+          article,
           article.enclosures,
           useThirdPartyMediaPlayer,
         );
       },
     });
     return { content, inlineUrls };
-  }, [
-    article.content,
-    article.id,
-    article.enclosures,
-    useThirdPartyMediaPlayer,
-  ]);
-  const mediaEnclosures = useThirdPartyMediaPlayer
-    ? getMediaEnclosures(article.enclosures, inlineUrls)
-    : [];
-  const audioEnclosure =
-    !useThirdPartyMediaPlayer &&
-    article.enclosures?.find((enclosure) =>
-      enclosure.mime_type?.startsWith("audio/"),
-    );
+  }, [article, useThirdPartyMediaPlayer]);
+  const mediaEnclosures = getMediaEnclosures(article.enclosures, inlineUrls);
   return (
     <>
-      {audioEnclosure && (
-        <audio controls className="w-full my-4" src={audioEnclosure.url}>
-          {t("articleView.audioNotSupported")}
-        </audio>
+      {mediaEnclosures.map((enclosure) =>
+        enclosure.mime_type?.toLowerCase().startsWith("audio/") ? (
+          <AudioLaunchButton
+            key={`${article.id}:${enclosure.url}`}
+            article={article}
+            kind="audio"
+            src={enclosure.url}
+            type={enclosure.mime_type}
+            title={enclosure.title || article.title}
+            enclosure={enclosure}
+          />
+        ) : useThirdPartyMediaPlayer ? (
+          <MediaPlayer
+            key={`${article.id}:${enclosure.url}`}
+              kind="video"
+            src={enclosure.url}
+            type={enclosure.mime_type}
+            title={enclosure.title || article.title}
+            enclosure={enclosure}
+          />
+        ) : null,
       )}
-      {mediaEnclosures.map((enclosure) => (
-        <MediaPlayer
-          key={`${article.id}:${enclosure.url}`}
-          kind={
-            enclosure.mime_type?.toLowerCase().startsWith("audio/")
-              ? "audio"
-              : "video"
-          }
-          src={enclosure.url}
-          type={enclosure.mime_type}
-          title={enclosure.title || article.title}
-          enclosure={enclosure}
-        />
-      ))}
       <PhotoProvider
         bannerVisible
         onVisibleChange={(visible) => imageGalleryActive.set(visible)}

@@ -1,4 +1,24 @@
 export default {
+  audioPlayer: {
+    inline: "文章音频播放器",
+    playing: "正在播放",
+    paused: "已暂停",
+    seek: "播放进度",
+    label: "音乐播放器",
+    listen: "播放音频",
+    open: "打开播放器",
+    inPlayer: "已在播放器中",
+    expand: "展开播放器",
+    collapse: "收起播放器",
+    play: "播放",
+    pause: "暂停",
+    close: "停止并关闭",
+    article: "返回文章",
+    backward: "后退 15 秒",
+    forward: "快进 30 秒",
+    playFailed: "未能开始播放，请点击播放重试。",
+    mediaFailed: "音频加载失败，请检查音源或重新打开播放器。",
+  },
   common: {
     resizeFeeds: "调整订阅栏宽度",
     resizeArticles: "调整文章列表宽度",
@@ -333,7 +353,7 @@ export default {
       media: "媒体",
       useThirdPartyMediaPlayer: "使用第三方视频播放器",
       useThirdPartyMediaPlayerDescription:
-        "实验性功能：使用 Video.js 播放文章中的音视频，开启后可同步音频附件的播放进度。",
+        "实验性功能：使用 Video.js 播放文章中的视频。音频始终使用独立的全局播放器，并同步音频附件的播放进度。",
       toolbars: "工具栏",
       readingNavigation: "阅读导航",
       showReadingRail: "显示阅读导航",

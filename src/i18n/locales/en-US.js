@@ -1,4 +1,24 @@
 export default {
+  audioPlayer: {
+    inline: "Article audio player",
+    playing: "Playing",
+    paused: "Paused",
+    seek: "Seek",
+    label: "Music player",
+    listen: "Play audio",
+    open: "Open player",
+    inPlayer: "In your player",
+    expand: "Expand player",
+    collapse: "Collapse player",
+    play: "Play",
+    pause: "Pause",
+    close: "Stop and close",
+    article: "Return to article",
+    backward: "Back 15 seconds",
+    forward: "Forward 30 seconds",
+    playFailed: "Playback could not start. Press play to retry.",
+    mediaFailed: "Audio could not load. Check the source or reopen the player.",
+  },
   common: {
     resizeFeeds: "Resize feeds sidebar",
     resizeArticles: "Resize article list",
@@ -340,7 +360,7 @@ export default {
       media: "MEDIA",
       useThirdPartyMediaPlayer: "Use third-party video player",
       useThirdPartyMediaPlayerDescription:
-        "Experimental: use Video.js for article audio and video, and sync playback progress for audio attachments when enabled.",
+        "Experimental: use Video.js for article videos. Audio always uses the global player with playback progress sync for audio attachments.",
       toolbars: "TOOLBARS",
       readingNavigation: "READING NAVIGATION",
       showReadingRail: "Show reading navigation",

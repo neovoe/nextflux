@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import "m3-ripple/ripple.css";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar.jsx";
 import { authState } from "@/stores/authStore.js";
 import { startAutoSync, stopAutoSync } from "@/stores/syncStore.js";
@@ -21,6 +21,10 @@ import SearchModal from "@/components/Search/SearchModal.jsx";
 import { useZoom } from "@/hooks/useZoom.js";
 import { useFontLoader } from "@/hooks/useFontLoader.js";
 import { useApplyReducedMotionPreference } from "@/hooks/useReducedMotion.js";
+
+const GlobalAudioPlayer = lazy(
+  () => import("@/components/GlobalAudio/GlobalAudioPlayer.jsx"),
+);
 
 function App() {
   const { syncInterval } = useStore(settingsState);
@@ -53,6 +57,9 @@ function App() {
       <UnsubscribeModal />
       <EditFeedModal />
       <SearchModal />
+      <Suspense fallback={null}>
+        <GlobalAudioPlayer />
+      </Suspense>
     </SidebarProvider>
   );
 }

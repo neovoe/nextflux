@@ -26,6 +26,7 @@ export default function useAudioProgress(enclosure) {
     window.addEventListener("pagehide", flush);
     document.addEventListener("visibilitychange", hide);
     return () => {
+      if (media.current) progress.record(media.current, true);
       progress.dispose();
       controller.current = null;
       window.removeEventListener("pagehide", flush);
@@ -40,11 +41,11 @@ export default function useAudioProgress(enclosure) {
   return {
     onLoadedMetadata(event) {
       media.current = event.currentTarget;
-      controller.current?.restore(media.current);
+      return controller.current?.restore(media.current);
     },
     onCanPlay(event) {
       media.current = event.currentTarget;
-      controller.current?.restore(media.current);
+      return controller.current?.restore(media.current);
     },
     onPlay() {
       controller.current?.interact();

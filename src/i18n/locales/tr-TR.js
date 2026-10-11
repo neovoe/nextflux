@@ -1,4 +1,26 @@
 export default {
+  audioPlayer: {
+    inline: "Makale ses oynatıcısı",
+    playing: "Oynatılıyor",
+    paused: "Duraklatıldı",
+    seek: "Oynatma konumu",
+    inPlayer: "Oynatıcıda açık",
+    label: "Müzik çalar",
+    listen: "Sesi oynat",
+    open: "Oynatıcıyı aç",
+    expand: "Oynatıcıyı genişlet",
+    collapse: "Oynatıcıyı daralt",
+    play: "Oynat",
+    pause: "Duraklat",
+    close: "Durdur ve kapat",
+    article: "Makaleye dön",
+    backward: "15 saniye geri",
+    forward: "30 saniye ileri",
+    playFailed:
+      "Oynatma başlatılamadı. Tekrar denemek için oynat düğmesine basın.",
+    mediaFailed:
+      "Ses yüklenemedi. Kaynağı kontrol edin veya oynatıcıyı yeniden açın.",
+  },
   common: {
     resizeFeeds: "Abonelik kenar çubuğunu yeniden boyutlandır",
     resizeArticles: "Makale listesini yeniden boyutlandır",
@@ -337,7 +359,7 @@ export default {
       media: "MEDYA",
       useThirdPartyMediaPlayer: "Üçüncü taraf video oynatıcı kullan",
       useThirdPartyMediaPlayerDescription:
-        "Deneysel özellik: Makalelerdeki ses ve videolar için Video.js kullanır ve etkinleştirildiğinde ses eklerinin oynatma ilerlemesini eşitler.",
+        "Deneysel özellik: Makalelerdeki videolar için Video.js kullanır. Ses her zaman genel oynatıcıyı kullanır ve ses eklerinin oynatma ilerlemesini eşitler.",
       toolbars: "ARAÇ ÇUBUKLARI",
       readingNavigation: "OKUMA GEZİNTİSİ",
       showReadingRail: "Okuma gezintisini göster",
